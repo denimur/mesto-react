@@ -34,7 +34,7 @@ function App() {
 
       <div className="popup popup_type_avatar">
         <div className="popup__container">
-          <form className="form form_type_avatar" name="avatar-form" novalidate>
+          <form className="form form_type_avatar" name="avatar-form" noValidate>
             <h2 className="form__heading">Обновить аватар</h2>
             <fieldset className="form__inputs">
               <label className="form__field">
@@ -59,7 +59,7 @@ function App() {
 
       <div className="popup popup_type_user">
         <div className="popup__container">
-          <form className="form form_type_user" name="user-form" method="post" novalidate>
+          <form className="form form_type_user" name="user-form" method="post" noValidate>
             <h2 className="form__heading">Редактировать профиль</h2>
             <fieldset className="form__inputs">
               <label className="form__field">
@@ -69,8 +69,8 @@ function App() {
                   name="user-name"
                   type="text" 
                   placeholder="Имя"
-                  minlength="2"
-                  maxlength="40"
+                  minLength="2"
+                  maxLength="40"
                   required
                 />
                 <span className="user-name-input-error form__item-error"></span>
@@ -82,8 +82,8 @@ function App() {
                   name="user-activity"
                   type="text" 
                   placeholder="О себе"
-                  minlength="2"
-                  maxlength="200"
+                  minLength="2"
+                  maxLength="200"
                   required
                 />
                 <span className="activity-input-error form__item-error"></span>
@@ -99,7 +99,7 @@ function App() {
 
       <div className="popup popup_type_card">
         <div className="popup__container">
-          <form className="form form_type_card" name="card-form" method="post" novalidate>
+          <form className="form form_type_card" name="card-form" method="post" noValidate>
             <h2 className="form__heading">Новое место</h2>
             <fieldset className="form__inputs">
               <label className="form__field">
@@ -109,8 +109,8 @@ function App() {
                   name="card-name"
                   type="text" 
                   placeholder="Название"
-                  minlength="2"
-                  maxlength="30"
+                  minLength="2"
+                  maxLength="30"
                   required
                 />
                 <span className="card-name-input-error form__item-error"></span>
