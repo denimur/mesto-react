@@ -5,7 +5,7 @@ function PopupWithForm(props) {
   const isCard = props.name === 'card';
 
 	return ( 
-		<div className={`popup popup_type_${props.name}`}>
+		<div className={`popup popup_type_${props.name} ${props.isOpen ? 'popup_opened' : ''}`}>
         <div className="popup__container">
           <form className={`form form_type_${props.name}`}>
           <h2 className="form__heading">{props.title}</h2>
@@ -16,7 +16,7 @@ function PopupWithForm(props) {
             </button>
           </fieldset>
           </form>
-          <button className="popup__close-btn"></button>
+          <button className="popup__close-btn" onClick={props.onClosePopup}></button>
         </div>
       </div>
 	 );

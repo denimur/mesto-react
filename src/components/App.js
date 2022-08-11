@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import Footer from "./Footer";
 import Header from "./Header";
 import Main from "./Main";
@@ -5,18 +6,51 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from './ImagePopup';
 
 function App() {
+
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false)
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false)
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false)
+
+  function handleEditAvatarClick() {
+    setEditAvatarPopupOpen(true)
+		// document.querySelector('.popup_type_avatar').classList.add('popup_opened')
+	}
+  function handleEditProfileClick() {
+    setEditProfilePopupOpen(true)
+		// document.querySelector('.popup_type_user').classList.add('popup_opened')
+	}
+  function handleAddPlaceClick() {
+    setAddPlacePopupOpen(true)
+		// document.querySelector('.popup_type_card').classList.add('popup_opened')
+  }
+
+  function closeAllPopups() {
+    setEditAvatarPopupOpen(false)
+    setEditProfilePopupOpen(false)
+    setAddPlacePopupOpen(false)
+  }
+  
   return (
     <div className="page__container">
 
       <Header />
 
-      <Main />
+      <Main
+        onEditAvatar={handleEditAvatarClick}
+        onAddPlace={handleAddPlaceClick}
+        onEditProfile={handleEditProfileClick}
+      />
 
       <Footer />
 
       <ImagePopup />
 
-      <PopupWithForm name="avatar" title="Обновить аватар">
+      <PopupWithForm
+        name="avatar"
+        title="Обновить аватар"
+        isOpen={isEditAvatarPopupOpen}
+        onClosePopup={closeAllPopups}
+      >
         <fieldset className="form__inputs">
           <label className="form__field">
             <input 
@@ -31,7 +65,12 @@ function App() {
           </label>
         </fieldset>
       </PopupWithForm>
-      <PopupWithForm name="user" title="Редактировать профиль">
+      <PopupWithForm
+        name="user"
+        title="Редактировать профиль"
+        isOpen={isEditProfilePopupOpen}
+        onClosePopup={closeAllPopups}
+      >
         <fieldset className="form__inputs">
           <label className="form__field">
             <input
@@ -61,7 +100,12 @@ function App() {
           </label>
         </fieldset>
       </PopupWithForm>
-      <PopupWithForm name="card" title="Новое место">
+      <PopupWithForm
+        name="card"
+        title="Новое место"
+        isOpen={isAddPlacePopupOpen}
+        onClosePopup={closeAllPopups}
+      >
         <fieldset className="form__inputs">
           <label className="form__field">
             <input
@@ -89,7 +133,11 @@ function App() {
           </label>
         </fieldset>                                     
       </PopupWithForm>
-      <PopupWithForm name="confirm" title="Вы уверены?" />
+      <PopupWithForm
+        name="confirm"
+        title="Вы уверены?"
+        // isOpen={}
+        onClosePopup={closeAllPopups} />
 
       {/* <div className="popup popup_type_confirm">
         <div className="popup__container">
