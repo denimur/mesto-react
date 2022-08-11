@@ -13,7 +13,7 @@ function Main() {
 		<main className="content">
 
 			<section className="profile">
-				<div className="profile__overlay" onClick={() => handleEditAvatarClick()}>
+				<div className="profile__overlay" onClick={handleEditAvatarClick}>
 					<img className="profile__avatar" alt="" />
 				</div>
 				<div className="profile__info">
@@ -21,13 +21,13 @@ function Main() {
 					<button
 						className="profile__edit-btn"
 						type="button"
-						onClick={() => handleEditProfileClick()}></button>
+						onClick={handleEditProfileClick}></button>
 					<p className="profile__activity overflow-hidden">Исследователь океана</p>
 				</div>
 				<button
 					className="profile__add-btn"
 					type="button"
-					onClick={() => handleAddPlaceClick()}></button>
+					onClick={handleAddPlaceClick}></button>
 			</section>
 
 			<section className="cards">	
