@@ -8,7 +8,7 @@ function PopupWithForm(props) {
 	return ( 
 		<div className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
         <div className="popup__container">
-          <form className={`form form_type_${name}`}>
+          <form className={`form form_type_${name}`} name={name}>
           <h2 className="form__heading">{title}</h2>
           { children }
           <fieldset className="form__handlers">
