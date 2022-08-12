@@ -1,6 +1,6 @@
 import React from 'react';
 import {options} from './constants';
-export default class Api extends React.Component {
+export class Api extends React.Component {
 	constructor(options) {
 		super();
 		this.cohortId = options.cohortId;
