@@ -12,9 +12,11 @@ function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false)
   const [isConfirmPopupOpen, setConfirmPopupOpen] = useState(false)
   const [selectedCard, setSelectedCard] = useState({})
+  const [isImagePopupOpened, setImagePopupOpened] = useState(false)
 
   function handleCardClick(card) {
     setSelectedCard(card)
+    setImagePopupOpened(true)
   }
 
   function handleDeleteBtnClick() {
@@ -36,7 +38,7 @@ function App() {
     setEditProfilePopupOpen(false)
     setAddPlacePopupOpen(false)
     setConfirmPopupOpen(false)
-    setSelectedCard({})
+    setImagePopupOpened(false)
   }
   
   return (
@@ -56,6 +58,7 @@ function App() {
 
       <ImagePopup
         card={selectedCard}
+        isOpen={isImagePopupOpened}
         onClose={closeAllPopups}
       />
 

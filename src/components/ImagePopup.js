@@ -1,9 +1,9 @@
 function ImagePopup(props) {
-	const { card, onClose } = props;
+	const { card, onClose, isOpen } = props;
 	const { name, link } = card;
 
 	return ( 
-		<div className={`popup popup_type_image ${link ? 'popup_opened' : ''}`}>
+		<div className={`popup popup_type_image ${isOpen ? 'popup_opened' : ''}`}>
 			<div className="popup__image-container">
 				<img
 					className="popup__image"
