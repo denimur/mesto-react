@@ -17,6 +17,33 @@ function Main(props) {
 		}, []
 	)
 
+	// function handleCardLike(card) {
+  //   // Снова проверяем, есть ли уже лайк на этой карточке
+  //   const isLiked = card.likes.some(i => i._id === user._id);
+    
+  //   // Отправляем запрос в API и получаем обновлённые данные карточки
+  //   api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+  //       setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
+  //   });
+	// }
+
+	function handleCardLike(card) {
+		const isLiked = card.likes.some(i => i._id === user._id);
+		if (!isLiked) {
+			api.likeCard(card._id)
+				.then(newCard => setCards(state => state.map(c => c._id === card._id ? newCard : c)))
+		}
+		else {
+			api.dislikeCard(card._id)
+				.then(newCard => setCards(state => state.map(c => c._id === card._id ? newCard : c)))
+		}
+	}
+
+	function handleCardDelete(card) {
+		api.deleteCard(card._id)
+			.then(setCards(state => state.filter(c => c._id !== card._id)))
+	}
+
 	return (
 		<main className="content">
 
@@ -47,6 +74,8 @@ function Main(props) {
 						<Card
 							key={card._id}
 							card={card}
+							onCardLike={handleCardLike}
+							onCardDelete={handleCardDelete}
 							onCardClick={props.onCardClick}
 							onDeleteBtnClick={props.onDeleteBtnClick}
 						/>)

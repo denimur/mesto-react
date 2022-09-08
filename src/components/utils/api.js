@@ -64,6 +64,10 @@ export class Api extends React.Component {
 		}).then(res => this._getResponseData(res))
 	}
 
+	changeLikeCardStatus(cardId, isLiked) {
+		return isLiked ? this.dislikeCard(cardId) : this.likeCard(cardId)
+	}
+
 	getUserInfo() {
 		return fetch(`https://nomoreparties.co/v1/${this.cohortId}/users/me`, {
 		  headers: {

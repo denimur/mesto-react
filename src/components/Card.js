@@ -3,19 +3,27 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function Card(props) {
 
-	const { card, onCardClick, onDeleteBtnClick } = props;
+	const { card, onCardClick, onCardLike, onCardDelete } = props;
 	const { name, link, likes } = card;
 	const currentUser = useContext(CurrentUserContext)
 
 	const isOwn = card.owner._id === currentUser._id
 	const cardDeleteButtonClassName =
-		(`card__delete-btn${!isOwn ? '_disabled' : ''}`)
+		(`card__delete-btn ${!isOwn ? 'card__delete-btn_disabled' : ''}`)
 	
 	const isLiked = card.likes.some(i => i._id === currentUser._id)
-	const cardLikeButtonClassName = (`like-group__icon${isLiked ? '_active' : ''}`)
+	const cardLikeButtonClassName = (`like-group__icon ${isLiked ? 'like-group__icon_active' : ''}`)
 
 	function handleCardClick() {
 		onCardClick(card)
+	}
+
+	function handleLikeClick() {
+		onCardLike(card)
+	}
+
+	function handleDeleteClick() {
+		onCardDelete(card)
 	}
 
 	return ( 
@@ -24,7 +32,7 @@ function Card(props) {
 				className="card__image"
 				alt={ name }
 				src={ link }
-				onClick={(handleCardClick)}
+				onClick={handleCardClick}
 			/>
 			<div className="card__group">
 				<p className="card__description overflow-hidden">{ name }</p>
@@ -32,6 +40,7 @@ function Card(props) {
 					<button
 						className={cardLikeButtonClassName}
 						type="button"
+						onClick={handleLikeClick}
 					></button>
 					<span className="like-group__count">{ likes.length }</span>
 				</div>
@@ -39,7 +48,8 @@ function Card(props) {
 			<button
 				className={ cardDeleteButtonClassName }
 				type="button"
-				onClick={onDeleteBtnClick}
+				// onClick={onDeleteBtnClick}
+				onClick={handleDeleteClick}
 			></button>
 		</article>
 	 );
