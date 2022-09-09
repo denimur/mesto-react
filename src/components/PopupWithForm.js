@@ -1,6 +1,6 @@
 function PopupWithForm(props) {
 
-  const { name, title, isOpen, children, onClose } = props;
+  const { name, title, isOpen, children, onClose, onSubmit } = props;
 
   const isConfirm = name === 'confirm';
   const isCard = name === 'card';
@@ -8,7 +8,7 @@ function PopupWithForm(props) {
 	return ( 
 		<div className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
         <div className="popup__container">
-          <form className={`form form_type_${name}`} name={name}>
+          <form className={`form form_type_${name}`} name={name} onSubmit={onSubmit}>
           <h2 className="form__heading">{title}</h2>
           { children }
           <fieldset className="form__handlers">

@@ -4,6 +4,7 @@ import Header from "./Header";
 import Main from "./Main";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from './ImagePopup';
+import EditProfilePopup from './EditProfilePopup';
 import { api } from './utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -49,6 +50,15 @@ function App() {
     setConfirmPopupOpen(false)
     setImagePopupOpened(false)
   }
+
+  function handleUpdateUser({name, about}) {
+    api.editUserInfo({ name, about })
+      .then(user => {
+        setCurrentUser(user)
+        closeAllPopups()
+      })
+      .catch(err => console.log(err))
+  }
   
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -92,7 +102,12 @@ function App() {
             </label>
           </fieldset>
         </PopupWithForm>
-        <PopupWithForm
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+        />
+        {/* <PopupWithForm
           name="user"
           title="Редактировать профиль"
           isOpen={isEditProfilePopupOpen}
@@ -126,7 +141,7 @@ function App() {
               <span className="activity-input-error form__item-error"></span>
             </label>
           </fieldset>
-        </PopupWithForm>
+        </PopupWithForm> */}
         <PopupWithForm
           name="card"
           title="Новое место"

@@ -32,16 +32,19 @@ function Main(props) {
 		if (!isLiked) {
 			api.likeCard(card._id)
 				.then(newCard => setCards(state => state.map(c => c._id === card._id ? newCard : c)))
+				.catch(err => console.log(err))
 		}
 		else {
 			api.dislikeCard(card._id)
 				.then(newCard => setCards(state => state.map(c => c._id === card._id ? newCard : c)))
+				.catch(err => console.log(err))
 		}
 	}
 
 	function handleCardDelete(card) {
 		api.deleteCard(card._id)
 			.then(setCards(state => state.filter(c => c._id !== card._id)))
+			.catch(err => console.log(err))
 	}
 
 	return (
@@ -59,7 +62,8 @@ function Main(props) {
 					<button
 						className="profile__edit-btn"
 						type="button"
-						onClick={ props.onEditProfile }></button>
+						onClick={props.onEditProfile}
+					></button>
 					<p className="profile__activity overflow-hidden">{ user.about }</p>
 				</div>
 				<button
