@@ -6,6 +6,7 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 import { api } from './utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -18,6 +19,36 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({})
   const [isImagePopupOpened, setImagePopupOpened] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
+  const [cards, setCards] = useState([])
+
+  useEffect(() => {
+		api.getInitialCards()
+			.then(initialCards => {
+				setCards(initialCards)
+			})
+			.catch(err => console.log(err))
+		}, []
+  )
+  
+  function handleCardLike(card) {
+		const isLiked = card.likes.some(i => i._id === currentUser._id);
+		if (!isLiked) {
+			api.likeCard(card._id)
+				.then(newCard => setCards(state => state.map(c => c._id === card._id ? newCard : c)))
+				.catch(err => console.log(err))
+		}
+		else {
+			api.dislikeCard(card._id)
+				.then(newCard => setCards(state => state.map(c => c._id === card._id ? newCard : c)))
+				.catch(err => console.log(err))
+		}
+	}
+
+	function handleCardDelete(card) {
+		api.deleteCard(card._id)
+			.then(setCards(state => state.filter(c => c._id !== card._id)))
+			.catch(err => console.log(err))
+	}
   
   useEffect(() => {
     api.getUserInfo()
@@ -54,6 +85,15 @@ function App() {
     setImagePopupOpened(false)
   }
 
+  function handleAddPlace(card) {
+    api.addCard(card)
+      .then(card => {
+        setCards([card, ...cards])
+        closeAllPopups()
+      })
+      .catch(err => console.log(err))
+  }
+
   function handleUpdateUser({name, about}) {
     api.editUserInfo({ name, about })
       .then(user => {
@@ -84,6 +124,9 @@ function App() {
           onEditProfile={handleEditProfileClick}
           onDeleteBtnClick={handleDeleteBtnClick}
           onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
+          cards={cards}
         />
 
         <Footer />
@@ -93,27 +136,11 @@ function App() {
           isOpen={isImagePopupOpened}
           onClose={closeAllPopups}
         />
-
-        {/* <PopupWithForm
-          name="avatar"
-          title="Обновить аватар"
-          isOpen={isEditAvatarPopupOpen}
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onAddPlace={handleAddPlace}
           onClose={closeAllPopups}
-        >
-          <fieldset className="form__inputs">
-            <label className="form__field">
-              <input 
-                id="avatar-input"
-                name="avatar-link"
-                className="form__item form__item_el_avatar"
-                type="url"
-                placeholder="https://somewebsite.com/someimage.jpg"
-                required
-              />
-              <span className="avatar-input-error form__item-error"></span>
-            </label>
-          </fieldset>
-        </PopupWithForm> */}
+        />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onUpdateAvatar={handleUpdateAvatar}
@@ -124,74 +151,6 @@ function App() {
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
         />
-        {/* <PopupWithForm
-          name="user"
-          title="Редактировать профиль"
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-        >
-          <fieldset className="form__inputs">
-            <label className="form__field">
-              <input
-                id="user-name-input"
-                className="form__item form__item_el_user-name" 
-                name="user-name"
-                type="text" 
-                placeholder="Имя"
-                minLength="2"
-                maxLength="40"
-                required
-              />
-              <span className="user-name-input-error form__item-error"></span>
-            </label>
-            <label className="form__field">
-              <input
-                id="activity-input"
-                className="form__item form__item_el_user-activity" 
-                name="user-activity"
-                type="text" 
-                placeholder="О себе"
-                minLength="2"
-                maxLength="200"
-                required
-              />
-              <span className="activity-input-error form__item-error"></span>
-            </label>
-          </fieldset>
-        </PopupWithForm> */}
-        <PopupWithForm
-          name="card"
-          title="Новое место"
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-        >
-          <fieldset className="form__inputs">
-            <label className="form__field">
-              <input
-                id="card-name-input"
-                className="form__item form__item_el_card-name" 
-                name="card-name"
-                type="text" 
-                placeholder="Название"
-                minLength="2"
-                maxLength="30"
-                required
-              />
-              <span className="card-name-input-error form__item-error"></span>
-            </label>
-            <label className="form__field">
-              <input
-                id="link-input"
-                className="form__item form__item_el_card-link" 
-                name="card-link"
-                type="url" 
-                placeholder="Ссылка на картинку"
-                required
-              />
-              <span className="link-input-error form__item-error"></span>
-            </label>
-          </fieldset>                                    
-        </PopupWithForm>
         <PopupWithForm
           name="confirm"
           title="Вы уверены?"
