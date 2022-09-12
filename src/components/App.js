@@ -5,6 +5,7 @@ import Main from "./Main";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 import { api } from './utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -35,10 +36,12 @@ function App() {
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true)
-	}
+  }
+  
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true)
-	}
+  }
+  
   function handleAddPlaceClick() {
     setAddPlacePopupOpen(true)
   }
@@ -53,6 +56,15 @@ function App() {
 
   function handleUpdateUser({name, about}) {
     api.editUserInfo({ name, about })
+      .then(user => {
+        setCurrentUser(user)
+        closeAllPopups()
+      })
+      .catch(err => console.log(err))
+  }
+
+  function handleUpdateAvatar({ avatar }) {
+    api.editUserAvatar({ avatar })
       .then(user => {
         setCurrentUser(user)
         closeAllPopups()
@@ -82,7 +94,7 @@ function App() {
           onClose={closeAllPopups}
         />
 
-        <PopupWithForm
+        {/* <PopupWithForm
           name="avatar"
           title="Обновить аватар"
           isOpen={isEditAvatarPopupOpen}
@@ -101,7 +113,12 @@ function App() {
               <span className="avatar-input-error form__item-error"></span>
             </label>
           </fieldset>
-        </PopupWithForm>
+        </PopupWithForm> */}
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onUpdateAvatar={handleUpdateAvatar}
+          onClose={closeAllPopups}
+        />
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
