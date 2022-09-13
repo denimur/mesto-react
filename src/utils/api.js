@@ -1,8 +1,10 @@
-import React from 'react';
-import {options} from './constants';
-export class Api extends React.Component {
+const options = {
+	cohortId: 'cohort-46',
+	token: 'a7c510e0-05ad-459e-a0d1-31a92d4ef951',
+};
+
+export class Api {
 	constructor(options) {
-		super();
 		this.cohortId = options.cohortId;
 		this.token = options.token;
 		this._url = 'https://mesto.nomoreparties.co/v1';

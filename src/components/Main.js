@@ -5,7 +5,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 function Main(props) {
 	const user = useContext(CurrentUserContext)
 
-	const { cards, onCardLike, onCardDelete, onCardClick, onDeleteBtnClick } = props;
+	const { cards, onCardLike, onCardClick, onDeleteBtnClick } = props;
 
 	return (
 		<main className="content">
@@ -29,7 +29,8 @@ function Main(props) {
 				<button
 					className="profile__add-btn"
 					type="button"
-					onClick={ props.onAddPlace }></button>
+					onClick={props.onAddPlace}
+				></button>
 			</section>
 
 			<section className="cards">
@@ -39,10 +40,10 @@ function Main(props) {
 							key={card._id}
 							card={card}
 							onCardLike={onCardLike}
-							onCardDelete={onCardDelete}
 							onCardClick={onCardClick}
 							onDeleteBtnClick={onDeleteBtnClick}
-						/>)
+						/>
+					)
 				}
 			</section>
 
